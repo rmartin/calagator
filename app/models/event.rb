@@ -396,11 +396,11 @@ EOF
               d << "\n\n Description:\n"
             end
 
-            d << Hpricot(item.description).to_plain_text unless item.description.blank?
+            d << item.description if item.description.present?
             d << "\n\nTags:\n#{item.tag_list}" unless item.tag_list.blank?
           end
           
-          entry.description(desc) unless desc.blank?
+          entry.description(strip_tags desc) unless desc.blank?
           
           entry.created       item.created_at if item.created_at
           entry.last_modified item.updated_at if item.updated_at
@@ -425,10 +425,10 @@ EOF
           if item.url.blank?
             entry.url opts[:url_helper].call(item) if opts[:url_helper]
           else
-            entry.url item.url
+            entry.url strip_tags(item.url)
           end
 
-          entry.location item.venue.title if item.venue
+          entry.location strip_tags(item.venue.title) if item.venue
           
           # dtstamp and uid added because of a bug in Outlook;
           # Outlook 2003 will not import an .ics file unless it has DTSTAMP, UID, and METHOD
