@@ -22,8 +22,8 @@ rowspans = calculate_rowspans(events)
         <%= events_sort_link('name') -%>,
         <%= events_sort_link('venue') -%>
         <%- if scores -%>,
-        <%= events_sort_link('score') -%>
-        <%- end -%>, 
+          <%= events_sort_link('score') -%>
+        <%- end -%>,
         <%= events_sort_link(nil) -%>
       </th>
     </tr>
@@ -44,15 +44,15 @@ rowspans = calculate_rowspans(events)
           <td class='event_summary'>
             <a class='summary' href='<%= url_for event_url(event) %>' name='<%= "event-#{event.id}" %>' id='<%= "event-#{event.id}" %>'><%= strip_tags event.title %></a><br />
             <%= normalize_time(event, :context => event.start_time.to_date) -%>
-            <% if event.venue && !event.venue.title.blank? %>
+            <% if event.venue && event.venue.title.present? %>
               <a class='location' href='<%= url_for venue_url(event.venue) %>'><%= strip_tags event.venue.title -%></a>
             <% end -%>
-            <% if !event.description.blank? %>
+            <% if event.description.present? %>
               <div class='description'>
                 <%= format_description(event.description) -%>
               </div>
             <% end -%>
-            <% if !event.url.blank? -%>
+            <% if event.url.present? -%>
               <%= link_to "Website", strip_tags(event.url), :class => "url", :rel => "nofollow" -%>
             <% end -%>
           </td>

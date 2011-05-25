@@ -1,23 +1,23 @@
 <div class="vevent">
   <h1 class="summary"><%= strip_tags @event.title %></h1>
   <div class='date'><%= normalize_time(@event) -%></div>
-  <% unless @event.venue.blank? %>
+  <% if @event.venue.present? %>
     <div class="location vcard">
     <a class="url" href='<%= url_for venue_url(@event.venue) %>'><span class='fn org'><%= strip_tags @event.venue.title -%></span></a>
     <div class="adr">
-      <% if !@event.venue.street_address.blank? -%>
+      <% if @event.venue.street_address.present? -%>
         <div class="street-address"><%= strip_tags @event.venue.street_address -%></div>
       <% end %>
-      <% if !@event.venue.locality.blank? -%>
+      <% if @event.venue.locality.present? -%>
         <span class="locality"><%= strip_tags @event.venue.locality -%></span>
       <% end -%>
-      <% if !@event.venue.region.blank? -%>
+      <% if @event.venue.region.present? -%>
         , <span class="region"><%= strip_tags @event.venue.region -%></span>
       <% end -%>
-      <% if !@event.venue.postal_code.blank? -%>
+      <% if @event.venue.postal_code.present? -%>
         <span class="postal-code"><%= strip_tags @event.venue.postal_code -%></span>
       <% end -%>
-      <% if !@event.venue.country.blank? -%>
+      <% if @event.venue.country.present? -%>
         <div class='country-name'><%= strip_tags @event.venue.country -%></div>
       <% end -%>
       <% if @event.venue && @event.venue.has_full_address? -%>
@@ -26,12 +26,12 @@
     </div>
     </div>
   <% end -%>
-  <% unless @event.description.blank? -%>
+  <% if @event.description.present? -%>
   <div class="description">
     <%= format_description(@event.description) %>
   </div>
   <% end -%>
-  <% unless @event.url.blank? -%>
+  <% if @event.url.present? -%>
   <h3>Links</h3>
   <ul>
     <li><%= link_to "Website", strip_tags(@event.url), :class => "url" -%></li>

@@ -47,7 +47,7 @@ class Source < ActiveRecord::Base
       source = Source.find_or_create_by_url(attrs[:url])
       attrs.each_pair do |key, value|
         if key.to_sym == :reimport
-          source.reimport = true if ! source.reimport && value
+          source.reimport = true if !source.reimport && value
         else
           source.send("#{key}=", value) if source.send(key) != value
         end

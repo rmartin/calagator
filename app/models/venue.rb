@@ -75,10 +75,10 @@ class Venue < ActiveRecord::Base
     venue = Venue.new
 
     # TODO Figure out if +abstract_location+ can ever be blank. If it can be blank, rework the later code in this method so that #geocode and duplicate finders aren't called on an effectively blank record. If it can't be blank, remove this unnecessary "unless" conditional.
-    unless abstract_location.blank?
+    if abstract_location.present?
       venue.source = source if source
       abstract_location.each_pair do |key, value|
-        venue[key] = value unless value.blank?
+        venue[key] = value if value.present?
       end
     end
 
@@ -179,7 +179,7 @@ class Venue < ActiveRecord::Base
   # Return this venue's latitude/longitude location,
   # or nil if it doesn't have one.
   def location
-    [latitude, longitude] unless latitude.blank? or longitude.blank?
+    [latitude, longitude] if latitude.present? && longitude.present?
   end
 
   # Should we default to forcing geocoding when the user edits this venue?
@@ -217,7 +217,7 @@ class Venue < ActiveRecord::Base
   #===[ Triggers ]========================================================
 
   def normalize_url!
-    unless self.url.blank? || self.url.match(/^[\d\D]+:\/\//)
+    if self.url.present? && ! self.url.match(%r{^[\d\D]+://})
       self.url = 'http://' + self.url
     end
   end

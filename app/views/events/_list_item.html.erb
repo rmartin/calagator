@@ -21,12 +21,12 @@ show_year ||= false
       <br/><a class='location' href='<%= url_for venue_url(event.venue) %>'><%= strip_tags event.venue.title -%></a>
     <% end -%>
     </div>
-    <% if !event.description.blank? %>
+    <% if event.description.present? %>
       <div class='description'>
         <%= format_description(event.description) -%>
       </div>
     <% end -%>
-    <% if !event.url.blank? -%>
+    <% if event.url.present? -%>
       <%= link_to "Website", strip_tags(event.url), :class => "url", :rel => "nofollow" -%>
     <% end -%>
   </div>

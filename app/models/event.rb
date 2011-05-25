@@ -397,10 +397,10 @@ EOF
             end
 
             d << item.description if item.description.present?
-            d << "\n\nTags:\n#{item.tag_list}" unless item.tag_list.blank?
+            d << "\n\nTags:\n#{item.tag_list}" if item.tag_list.present?
           end
           
-          entry.description(strip_tags desc) unless desc.blank?
+          entry.description(strip_tags desc) if desc.present?
           
           entry.created       item.created_at if item.created_at
           entry.last_modified item.updated_at if item.updated_at
@@ -452,7 +452,7 @@ EOF
   end
 
   def normalize_url!
-    unless self.url.blank? || self.url.match(/^[\d\D]+:\/\//)
+    if self.url.present? && ! self.url.match(/^[\d\D]+:\/\//)
       self.url = 'http://' + self.url
     end
   end

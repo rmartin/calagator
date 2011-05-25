@@ -107,7 +107,7 @@ module DuplicateChecking
 
     # Return set of attributes that should be ignored for duplicate checking
     def duplicate_checking_ignores_attributes(*args)
-      unless args.empty?
+      if args.present?
         self._duplicate_checking_ignores_attributes.merge(args.map(&:to_sym))
       end
       return(DUPLICATE_CHECKING_IGNORES_ATTRIBUTES + self._duplicate_checking_ignores_attributes)
@@ -115,7 +115,7 @@ module DuplicateChecking
 
     # Return set of associations that will be ignored during duplicate squashing
     def duplicate_squashing_ignores_associations(*args)
-      unless args.empty?
+      if args.present?
         self._duplicate_squashing_ignores_associations.merge(args.map(&:to_sym))
       end
       return self._duplicate_squashing_ignores_associations
@@ -148,7 +148,7 @@ module DuplicateChecking
       end
 
       if condition
-        if !new.attribute_names.include?('duplicate_of_id')
+        unless self.new.attribute_names.include?('duplicate_of_id')
           raise ArgumentError, "#{table_name} is not set up to track duplicates."
         end
         args[0] = :all
@@ -260,7 +260,7 @@ module DuplicateChecking
         next if !master.new_record? && !duplicate.new_record? && duplicate.id == master.id
 
         # Transfer any venues that use this now duplicate venue as a master
-        unless duplicate.duplicates.blank?
+        if duplicate.duplicates.present?
           RAILS_DEFAULT_LOGGER.debug("#{self.name}#squash: recursively squashing children of #{self.name}@#{duplicate.id}")
           squash(:master => master, :duplicates => duplicate.duplicates)
         end

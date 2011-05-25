@@ -3,8 +3,7 @@
 <kml xmlns="http://earth.google.com/kml/2.2">
   <Document>
   <% for event in @events %>
-  <% next if event.venue.nil? %>
-  <% next if event.venue.latitude.nil? %>
+  <% next unless event.venue && event.venue.latitude && event.venue.longitude %>
   <Placemark>
     <name><%= strip_tags event.title %></name>
     <description><%= cdata_section("#{format_description(event.description)}<p>Venue: #{strip_tags event.venue.title}</p>") %></description>

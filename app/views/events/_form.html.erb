@@ -116,8 +116,8 @@
   </div>
   <div>
     <%= f.label :venue_id, "Venue" %>
-    <%= text_field_tag 'venue_name', '', :class=> 'autocomplete', :value => !event.venue.nil? ? event.venue.title : params[:venue_name] %>
-    <%= hidden_field(:event, :venue_id, :value => (!event.venue.nil? ? event.venue.id : params[:event_venue_id])) %>
+    <%= text_field_tag 'venue_name', '', :class=> 'autocomplete', :value => event.venue.present? ? event.venue.title : params[:venue_name] %>
+    <%= hidden_field(:event, :venue_id, :value => (event.venue.present? ? event.venue.id : params[:event_venue_id])) %>
     <%= image_tag "spinner.gif", :id=> "event_venue_loading", :style => "display: none; margin-left: 0.5em;" %>
   </div>
   <div class='help'>

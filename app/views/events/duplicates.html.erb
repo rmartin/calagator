@@ -20,7 +20,7 @@
       <li><%= link_to_unless_current "All Events", url_for(:action => 'duplicates', :type => 'na') %></li>
     </ul>
   </div>
-  <% unless @grouped_events.empty? %>
+  <% if @grouped_events.present? %>
     <%= form_tag :action => "squash_many_duplicates", :method => :post %>
       <div class="flash notice">
         Select only one set of master and duplicate events. If you select an unrelated event, it will be merged into the same single master record.
@@ -30,7 +30,7 @@
         <table>
           <% for value, group in @grouped_events %>
             <tr>
-              <th>Master?</th><th>Duplicate?</th><th>Event<%= " (#{value})" unless value.blank? %></th>
+              <th>Master?</th><th>Duplicate?</th><th>Event<%= " (#{value})" if value.present? %></th>
             </tr>
             <% for event in group %>
               <tr class="<%= cycle('odd', 'even') %>">
