@@ -46,6 +46,6 @@
 </div>
 
 <div id='list_items'>
-  <%= render :partial => 'events/table', :locals => { :events => @events } %>
+  <%= render 'events/table', :events => @events %>
 </div>
 <% end %>

@@ -9,7 +9,7 @@
 
 <p>
    <b>Events:</b>
-   <%= render :partial => 'events/list', :locals => { :events =>  @source.events } %>
+   <%= render 'events/list', :events =>  @source.events %>
 </p>
 
 <%= link_to 'Back', sources_path %> |

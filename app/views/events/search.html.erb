@@ -3,8 +3,8 @@
 <% content_for :discovery_insert do %>
   <%= auto_discovery_link_tag(:atom, search_events_url(:query => @query, :format => 'atom'), :title => "Atom: Search Results for '#{@query}'" )%>
 <% end -%>
-<%= render :partial => 'search_section', :locals => {:description => "current", :events => @grouped_events[:current]} %>
-<%= render :partial => 'search_section', :locals => {:description => "past", :events => @grouped_events[:past]} %>
+<%= render 'search_section', :description => "current", :events => @grouped_events[:current] %>
+<%= render 'search_section', :description => "past", :events => @grouped_events[:past] %>
 
 <div id='list_filters' class='sidebar'>
   <h3>Subscribe to</h3>

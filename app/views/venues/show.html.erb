@@ -75,7 +75,7 @@
 
     <div id='future_events'>
       <h2>Future events happening here</h2>
-      <%= render :partial => 'events/list', :locals => { :events => @events } %>
+      <%= render 'events/list', :events => @events %>
     </div>
   </div>
 

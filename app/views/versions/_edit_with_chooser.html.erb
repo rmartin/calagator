@@ -9,7 +9,7 @@ name = record.class.name.underscore.to_sym
 template = "/#{record.class.name.pluralize.underscore}/form"
 %>
 
-<%= render :partial => '/versions/chooser', :locals => {:record => record, :target => target} %>
+<%= render 'versions/chooser', :record => record, :target => target %>
 
 <div id='<%= target %>'>
   <%= render template, name => record %>
