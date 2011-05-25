@@ -106,7 +106,7 @@
 
 <% form_for(event, :html => {:id => "event_form", :class => "standard_form"}) do |f| %>
   <fieldset>
-    <legend><% unless event.new_record? %>Editing: <em><%= event.title %></em><% end %></legend>
+    <legend><% unless event.new_record? %>Editing: <em><%= strip_tags event.title %></em><% end %></legend>
     
   <%= error_messages_for :event %>
   <div>

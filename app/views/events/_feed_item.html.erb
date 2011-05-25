@@ -1,30 +1,30 @@
 <div class="vevent">
-  <h1 class="summary"><%= event.title %></h1>
+  <h1 class="summary"><%= strip_tags event.title %></h1>
   <div class='date'><%= normalize_time(event) %></div>
 
   <% unless event.venue.blank? %>
     <div class="location vcard">
     <a href='<%= url_for venue_path(event.venue) %>' class='url'>
-        <span class='fn org'><%= h event.venue.title %></span>
+        <span class='fn org'><%= strip_tags event.venue.title %></span>
     </a>
     <div class="adr">
       <% if !event.venue.street_address.blank? %>
-        <div class="street-address"><%= event.venue.street_address %></div>
+        <div class="street-address"><%= strip_tags event.venue.street_address %></div>
       <% end %>
       <% if !event.venue.locality.blank? %>
-        <span class="locality"><%= event.venue.locality %></span>
+        <span class="locality"><%= strip_tags event.venue.locality %></span>
       <% end %>
       <% if !event.venue.region.blank? %>
-        , <span class="region"><%= event.venue.region %></span>
+        , <span class="region"><%= strip_tags event.venue.region %></span>
       <% end %>
       <% if !event.venue.postal_code.blank? %>
-        <span class="postal-code"><%= event.venue.postal_code %></span>
+        <span class="postal-code"><%= strip_tags event.venue.postal_code %></span>
       <% end %>
       <% if !event.venue.country.blank? %>
-        <div class='country-name'><%= event.venue.country %><div>
+        <div class='country-name'><%= strip_tags event.venue.country %><div>
       <% end %>
       <% if event.venue && event.venue.has_full_address? %>
-        (<a href='<%=google_maps_url(event.venue.full_address)%>'>map</a>)
+        (<a href='<%=google_maps_url(strip_tags event.venue.full_address)%>'>map</a>)
       <% end %>
     </div>
     </div>
@@ -39,7 +39,7 @@
   <% unless event.url.blank? %>
   <h3>Links</h3>
   <ul>
-    <li><%= link_to "Website", event.url, :class => "url" %></li>
+    <li><%= link_to "Website", strip_tags(event.url), :class => "url" %></li>
   </ul>
   <% end %>
 

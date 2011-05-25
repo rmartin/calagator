@@ -4,8 +4,8 @@
   <% for venue in @venues -%>
   <% next if venue.latitude.nil? -%>
   <Placemark>
-    <name><%= escape_once(venue.title) %></name>
-    <description><%= cdata_section(venue.description) %></description>
+    <name><%= strip_tags venue.title %></name>
+    <description><%= cdata_section(format_description venue.description) %></description>
     <Point>
       <coordinates><%= venue.longitude %>,<%= venue.latitude %></coordinates>
     </Point>

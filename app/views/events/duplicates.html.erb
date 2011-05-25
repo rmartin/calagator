@@ -37,8 +37,8 @@
                 <td><%= radio_button_tag("master_id", event.id) %></td>
                 <td><%= check_box_tag("duplicate_id_#{event.id}", event.id) %></td>
                 <td>
-                  <div><%= link_to event.title, event_url(event) %></div>
-                  <div><%= event.start_time %><%= h ", #{event.venue.title}" unless event.venue.nil? %></div>
+                  <div><%= link_to strip_tags(event.title), event_url(event) %></div>
+                  <div><%= event.start_time %><%= strip_tags(", #{event.venue.title}") if event.venue.present? %></div>
                </td>
               </tr>
             <% end %>

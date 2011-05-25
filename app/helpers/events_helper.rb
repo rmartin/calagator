@@ -74,7 +74,7 @@ module EventsHelper
 
   # Return a Google Calendar export URL.
   def google_event_export_link(event)
-    result = "http://www.google.com/calendar/event?action=TEMPLATE&trp=true&text=" << CGI::escape(event.title.strip_html)
+    result = "http://www.google.com/calendar/event?action=TEMPLATE&trp=true&text=" << CGI::escape(strip_tags(event.title))
 
     result << "&dates=" << format_google_timespan(event)
 

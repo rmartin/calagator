@@ -1,9 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
   # Returns HTML string of an event or venue description for display in a view.
   def format_description(string)
-    return upgrade_br(simple_format(auto_link(white_list(string.gsub(%r{<br\s?/?>}, "\n")))))
+    return upgrade_br(simple_format(auto_link(Kernel.sanitize(white_list(string.gsub(%r{<br\s?/?>}, "\n"))))))
   end
 
   # Return a HTML string with the BR tags converted to XHTML compliant markup.
@@ -52,7 +51,7 @@ module ApplicationHelper
       if location
         map.markers << GoogleMapMarker.new(:map => map,
           :lat => location[0], :lng => location[1],
-          :html => link_to(locatable_item.title, locatable_item),
+          :html => link_to(strip_tags(locatable_item.title), locatable_item),
           :icon => icon)
       end
     end
@@ -100,7 +99,7 @@ module ApplicationHelper
     if item.source.nil?
       stamp << "added directly to #{SETTINGS.name}"
     else
-      stamp << "imported from " << link_to(truncate(item.source.name, :length => 40), item.source)
+      stamp << "imported from " << link_to(truncate(strip_tags(item.source.name), :length => 40), item.source)
     end
     stamp << " <br />" << content_tag(:strong, normalize_time(item.created_at, :format => :html) )
     if item.updated_at > item.created_at
@@ -146,9 +145,9 @@ module ApplicationHelper
     # TODO Figure out how to set tabindex, because neither of these work right.
   end
 
-  # Returns a string with safely encoded entities thanks to #h, while preserving any existing HTML entities.
+  # Returns markup with safely-encoded entities, no unsafe tags, and balanced tags.
   def cleanse(string)
-    return escape_once(string)
+    return Kernel.sanitize(string)
   end
 
   def tag_links_for(model)
@@ -165,6 +164,6 @@ module ApplicationHelper
     link_classes = [link_class]
     link_classes << "external #{tag.machine_tag[:namespace]} #{tag.machine_tag[:predicate]}" if tag.machine_tag[:url]
 
-    link_to cleanse(tag.name), (tag.machine_tag[:url] || internal_url), :class => link_classes.compact.join(' ')
+    link_to Kernel.sanitize(tag.name), (tag.machine_tag[:url] || internal_url), :class => link_classes.compact.join(' ')
   end
 end

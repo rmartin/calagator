@@ -40,7 +40,7 @@
     <li>
       <%= link_to_function 'hCalendar markup', '$("#hcal_field").toggle()' %>
       <div id="hcal_field" style="display: none;">
-        <%= text_area_tag 'hCalendar', h(@show_hcal), :rows => 10, :cols => 80 %>
+        <%= text_area_tag 'hCalendar', @show_hcal, :rows => 10, :cols => 80 %>
       </div>
     </li>
   </ul>

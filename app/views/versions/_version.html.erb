@@ -16,7 +16,7 @@
         <%= link_to "(Rollback)", version, :method => :put, :confirm => 'Are you sure?' %>
         <% if version.whodunnit %>
           <% if user = Member.find(version.whodunnit) rescue nil %>
-            by <%= link_to h(user.name), member_path(user) %>
+            by <%= link_to strip_tags(user.name), member_path(user) %>
           <% end %>
         <% end %>
       </a>
@@ -31,11 +31,11 @@
             <b><%= key %></b>
           </td>
           <td class="change_detail_value">
-            <%= text_or_nil(changes[key][:previous]) %>
+            <%= escape_once text_or_nil(changes[key][:previous]) %>
           </td>
           <td class="change_detail_spacer">&rarr;</td>
           <td class="change_detail_value">
-            <%= text_or_nil(changes[key][:current]) %>
+            <%= escape_once text_or_nil(changes[key][:current]) %>
           </td>
         </tr>
       <% end %>

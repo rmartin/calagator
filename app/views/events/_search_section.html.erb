@@ -5,7 +5,7 @@ Locals:
 %>
 <div id='list_description'>
   <h2>Viewing <strong> <%= pluralize events.size, "#{description} event" %></strong>
-  matching <strong>&ldquo;<%= @query || @tag %>&rdquo;</strong>
+  matching <strong>&ldquo;<%= strip_tags(@query || @tag) %>&rdquo;</strong>
   <%= events_sort_label(params[:order]) %></h2>
 </div>
 
